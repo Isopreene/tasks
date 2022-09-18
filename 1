@@ -1,14 +1,16 @@
+import json
 import csv
-with open('playgrounds.csv', 'r', encoding='UTF-8') as file:
+with open('/Users/mirnauki/Downloads/playgrounds.csv', 'r', encoding='UTF-8') as file:
     d1 = {}
     d2 = {}
     data = csv.DictReader(file, delimiter=';')
     for i in data:
         #print(i)
-        d1[i['AdmArea']] = d1.get(i['AdmArea'], {}) | {i['District']: d1.get(i['District'], []) + [i['Address']]}
+        d1[i['AdmArea']] = d1.get(i['AdmArea'], {}) | {i['District']: []}
         d2[i['District']] = d2.get(i['District'], []) + [i['Address']]
+    #print()
     print(d1)
     print(d2)
     for i in data:
-        d1[i['AdmArea']][i['District']].update(0)
+        d1[i['AdmArea']][i['District']].update(d2[i['District']])
     print(d1)
